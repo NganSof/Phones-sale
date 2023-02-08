@@ -1,0 +1,19 @@
+.boderCard {
+    margin: 20px 10px;
+    padding: 20px;
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gutterCard {
+    margin: 0 30px;
+}
+
+.textList {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 30px 0;
+    letter-spacing: 3.5px;
+}

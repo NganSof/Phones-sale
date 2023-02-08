@@ -1,0 +1,42 @@
+.bgCard {
+    background: #ede6e6;
+    text-align: 'center';
+    width: 23%;
+    height: 450px;
+    border: 1px solid #8cdeec;
+    border-radius: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+
+.bgCard:hover {
+    box-shadow: 0 10px 20px #6e9da5;
+}
+
+.imgPhone {
+    width: 100%;
+    transform: scale(1);
+}
+
+img {
+    height: 250px;
+    width: 100%;
+    padding: 0 50px;
+    object-fit: contain;
+    padding-bottom: 15px;
+}
+
+img:hover {
+    transform: scale(1.5);
+    overflow: hidden;
+}
+
+.bottomBut {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px;
+    align-items: center;
+}
