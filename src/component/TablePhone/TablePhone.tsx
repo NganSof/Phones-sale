@@ -7,7 +7,7 @@ import { addQuanlity, selectPhones } from "../../reducer/reducerPhone/Phone";
 import { useDispatch, useSelector } from "react-redux";
 
 export const TablePhone: FC = () => {
-  const { listPhones, quanPhone } = useSelector(selectPhones);
+  const { listPhones } = useSelector(selectPhones);
   const dispatch = useDispatch();
   const handleAddQuan = (record: any) => {
     dispatch(addQuanlity(record.id));
@@ -37,7 +37,7 @@ export const TablePhone: FC = () => {
           >
             +
           </Button>
-          <span>{quanPhone}</span>
+          <span>{listPhones.quanPhone ? listPhones.quanPhone : 0}</span>
           <Button>-</Button>
         </>
       ),

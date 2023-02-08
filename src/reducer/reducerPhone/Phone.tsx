@@ -1,22 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { listArrPhone } from "../../mock/ArrPhone";
 
-const initialState = { listPhones: listArrPhone, quanPhone: 0 };
+const initialState = { listPhones: listArrPhone };
 
 export const Phone = createSlice({
   name: "phones",
   initialState,
   reducers: {
     addQuanlity: (state, { payload }) => {
-      let indAdd = state.listPhones?.filter((item) => {
+      const crrState = current(state);
+      let indAdd = crrState.listPhones?.filter((item) => {
         return item.id === payload;
       });
-      console.log("indAdd", indAdd);
 
-      if (indAdd.length >= 0) {
-        state.quanPhone++;
-      }
-      console.log("state", state);
+      let [item] = indAdd;
+      item.quanPhone++;
+      console.log("item", item);
     },
     reduceQuanlity: () => {},
   },
