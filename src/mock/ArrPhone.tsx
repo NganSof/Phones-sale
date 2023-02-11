@@ -1,9 +1,9 @@
 export interface ListPhone {
-  id: number;
+  id: number | "";
   name: string;
   type: string;
-  store: number;
-  quanPhone: number;
+  store: number | "";
+  quanPhone: number | "";
 }
 
 export const listArrPhone: ListPhone[] = [

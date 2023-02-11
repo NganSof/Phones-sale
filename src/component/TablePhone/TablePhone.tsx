@@ -3,17 +3,28 @@ import "./TablePhone.css";
 import { Button, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { ListPhone } from "../../mock/ArrPhone";
-import { addQuanlity, selectPhones } from "../../reducer/reducerPhone/Phone";
+import {
+  addQuanlity,
+  reduceQuanlity,
+  selectPhones,
+  updateListArrPhone,
+} from "../../reducer/reducerPhone/Phone";
 import { useDispatch, useSelector } from "react-redux";
 
 export const TablePhone: FC = () => {
   const { listPhones } = useSelector(selectPhones);
-  console.log("tableListPhone", listPhones);
-
   const dispatch = useDispatch();
+
+  // check handleUpdateListPhone
+  // const handleUpdateListPhone = () => {};
   const handleAddQuan = (record: any) => {
     dispatch(addQuanlity(record));
   };
+  const handleReduQuan = (record: any) => {
+    dispatch(reduceQuanlity(record));
+  };
+  // dispatch(updateListArrPhone(listPhones));
+
   const columns: ColumnsType<ListPhone> = useMemo(
     () => [
       { title: " ", key: "id" },
@@ -40,8 +51,14 @@ export const TablePhone: FC = () => {
             >
               +
             </Button>
-            <span>{record.quanPhone > 0 ? record.quanPhone : 0}</span>
-            <Button>-</Button>
+            <span>{record.quanPhone}</span>
+            <Button
+              onClick={() => {
+                handleReduQuan(record);
+              }}
+            >
+              -
+            </Button>
           </>
         ),
       },

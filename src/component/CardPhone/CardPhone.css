@@ -23,7 +23,7 @@
 img {
     height: 250px;
     width: 100%;
-    padding: 0 50px;
+    /* padding: 0 50px; */
     object-fit: contain;
     padding-bottom: 15px;
 }
@@ -33,10 +33,18 @@ img:hover {
     overflow: hidden;
 }
 
-.bottomBut {
+.bottomRight {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 0 50px;
+    justify-content: space-evenly;
+    /* padding: 0 50px; */
+    align-items: center;
+}
+
+.bottomCard,
+.bottomLeft {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
     align-items: center;
 }
