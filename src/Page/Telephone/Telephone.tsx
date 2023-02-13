@@ -7,37 +7,25 @@ import "./Telephone.css";
 
 export const Telephone: FC = () => {
   const { listPhones } = useSelector(selectPhones);
-  let oriObject: ListPhone = {
-    id: "",
-    name: "",
-    type: "",
-    store: "",
-    quanPhone: "",
-  };
   let cloneList = [...listArrPhone, ...listPhones];
 
-  const handleList = (cloneList: ListPhone[]) => {
-    let newListPhones: ListPhone[] = [];
-    cloneList.findIndex((item) => {
-      if (item.id === oriObject.id) {
-        newListPhones.pop();
-        return newListPhones.push(item);
-      } else {
-        oriObject = { ...item };
-        newListPhones.push(item);
-      }
-    });
-    console.log("new", cloneList, newListPhones);
+  useEffect(() => {
+    handleList(cloneList);
+  }, [listPhones]);
 
-    if (newListPhones.length) {
-      return newListPhones?.map((item, index) => {
-        return (
-          <Fragment key={index}>
-            <CardPhone phone={item} />
-          </Fragment>
-        );
-      });
-    }
+  const handleList = (cloneList: ListPhone[]) => {
+    // handle remove object duplication
+    let cachedObject: any = {};
+    cloneList.map((item) => (cachedObject[item.id] = item));
+    cloneList = Object.values(cachedObject);
+
+    return cloneList?.map((item, index) => {
+      return (
+        <Fragment key={index}>
+          <CardPhone phone={item} />
+        </Fragment>
+      );
+    });
   };
 
   return (

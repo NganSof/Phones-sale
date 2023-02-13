@@ -3,7 +3,6 @@ import { listArrPhone, ListPhone } from "../../mock/ArrPhone";
 
 export const Phone = createSlice({
   name: "phones",
-  // oriListPhons: listArrPhone
   initialState: { listPhones: [], total: 0 },
   reducers: {
     addQuanlity: (state, { payload }) => {
@@ -15,6 +14,10 @@ export const Phone = createSlice({
       if (index !== -1 && state.listPhones[index]["store"] !== 0) {
         store = state.listPhones[index]["store"]--;
         add = state.listPhones[index]["quanPhone"]++;
+        state.listPhones.reduce((total, item: any) => {
+          total += current(item).quanPhone * current(item).price;
+          return (state.total = total);
+        }, 0);
         if (add >= store) {
           store = 0;
         }
@@ -23,7 +26,10 @@ export const Phone = createSlice({
       if (index !== -1 && state.listPhones[index]["store"] === 0) {
         return;
       } else {
-        state.listPhones.push(payload);
+        state.listPhones.push(payload as never);
+        state.total += (payload.quanPhone + 1) * payload.price;
+        console.log("total", payload["quanPhone"], payload["price"]);
+        // add lại bị lỗi
         payload.quanPhone++;
         payload.store--;
       }
@@ -33,22 +39,29 @@ export const Phone = createSlice({
       let index = state.listPhones.findIndex(
         (ind: ListPhone) => current(ind).id === payload.id
       );
-      if (index !== -1 && state.listPhones[index]["quanPhone"] > 0) {
+
+      if (state.listPhones[index]["quanPhone"] > 0) {
         state.listPhones[index]["store"]++;
         state.listPhones[index]["quanPhone"]--;
-      } else {
-        state.listPhones.splice(payload, 1);
+        state.total -=
+          state.listPhones[index]["quanPhone"] *
+          state.listPhones[index]["price"];
+        if (state.listPhones[index]["quanPhone"] === 0) {
+          state.total =
+            current(state.listPhones[index])["quanPhone"] *
+            current(state.listPhones[index])["price"];
+          // lỗi có 1 sp ra khỏi giỏ total=0
+          // lỗi xóa khỏi giỏ hàng không cập nhật đc listArrPhone mới
+          state.listPhones.splice(index, 1);
+          console.log("listArr", listArrPhone[index]);
+        }
       }
       return state;
-    },
-    updateListArrPhone: (state, { payload }) => {
-      console.log("payload", payload);
     },
   },
 });
 
-export const { addQuanlity, reduceQuanlity, updateListArrPhone } =
-  Phone.actions;
+export const { addQuanlity, reduceQuanlity } = Phone.actions;
 
 export const selectPhones = (state: any) => state.phones;
 export default Phone.reducer;

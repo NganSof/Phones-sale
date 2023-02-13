@@ -1,5 +1,5 @@
 import { Button, Card, Modal } from "antd";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { ListPhone } from "../../mock/ArrPhone";
 import picture from "../../asset/samsung.png";
 import "./CardPhone.css";
@@ -12,6 +12,7 @@ import { addQuanlity } from "../../reducer/reducerPhone/Phone";
 export const CardPhone: FC<{ phone: ListPhone }> = ({ phone }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+
   const showModal = () => {
     setOpen(true);
   };
@@ -23,14 +24,13 @@ export const CardPhone: FC<{ phone: ListPhone }> = ({ phone }) => {
     dispatch(addQuanlity(phone));
   };
 
-  // useEffect(() => {}, [phone]);
-
   return (
     <>
       <Card.Grid className="bgCard">
         <div className="imgPhone" title={phone.name}>
           <img src={picture} alt="imagePhone" />
         </div>
+        <p>{phone.name}</p>
         <div className="bottomCard">
           <div className="bottomLeft">
             <div>
