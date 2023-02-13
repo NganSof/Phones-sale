@@ -7,8 +7,8 @@ import "./Telephone.css";
 
 export const Telephone: FC = () => {
   const { listPhones } = useSelector(selectPhones);
-  let cloneList = [...listArrPhone, ...listPhones];
 
+  let cloneList = [...listArrPhone, ...listPhones];
   useEffect(() => {
     handleList(cloneList);
   }, [listPhones]);

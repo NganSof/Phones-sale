@@ -28,7 +28,6 @@ export const Phone = createSlice({
       } else {
         state.listPhones.push(payload as never);
         state.total += (payload.quanPhone + 1) * payload.price;
-        console.log("total", payload["quanPhone"], payload["price"]);
         // add lại bị lỗi
         payload.quanPhone++;
         payload.store--;
@@ -43,17 +42,20 @@ export const Phone = createSlice({
       if (state.listPhones[index]["quanPhone"] > 0) {
         state.listPhones[index]["store"]++;
         state.listPhones[index]["quanPhone"]--;
-        state.total -=
-          state.listPhones[index]["quanPhone"] *
-          state.listPhones[index]["price"];
-        if (state.listPhones[index]["quanPhone"] === 0) {
-          state.total =
-            current(state.listPhones[index])["quanPhone"] *
-            current(state.listPhones[index])["price"];
-          // lỗi có 1 sp ra khỏi giỏ total=0
+
+        state.listPhones.reduce((total, item: any) => {
+          total -= current(item).quanPhone * current(item).price;
+          return (state.total = total);
+        }, 0);
+
+        if (state.listPhones[index]["quanPhone"] <= 0) {
+          state.listPhones.reduce((total, item: any) => {
+            total -= current(item).quanPhone * current(item).price;
+            return (state.total = total);
+          }, 0);
           // lỗi xóa khỏi giỏ hàng không cập nhật đc listArrPhone mới
           state.listPhones.splice(index, 1);
-          console.log("listArr", listArrPhone[index]);
+          console.log("Stotal", state.total);
         }
       }
       return state;
