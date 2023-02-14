@@ -1,13 +1,13 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { listArrPhone, ListPhone } from "../../mock/ArrPhone";
 
 export const Phone = createSlice({
   name: "phones",
   initialState: { listPhones: [], total: 0 },
   reducers: {
-    addQuanlity: (state, { payload }) => {
+    addQuanlity: (state, action: PayloadAction<ListPhone>) => {
       let index = state.listPhones.findIndex(
-        (ind: ListPhone) => current(ind).id === payload.id
+        (ind: ListPhone) => current(ind).id === action.payload.id
       );
       let store: number = 0;
       let add: number = 0;
@@ -23,22 +23,21 @@ export const Phone = createSlice({
       if (index !== -1 && state.listPhones[index]["store"] === 0) {
         return;
       } else {
-        state.listPhones.push(payload as never);
+        state.listPhones.push(action.payload as never);
         // add lại bị lỗi
-        payload.quanPhone++;
-        payload.store--;
+        action.payload.quanPhone = +action.payload.quanPhone + 1;
+        action.payload.store = +action.payload.store - 1;
       }
       return state;
     },
-    reduceQuanlity: (state, { payload }) => {
+    reduceQuanlity: (state, action: PayloadAction<ListPhone>) => {
       let index = state.listPhones.findIndex(
-        (ind: ListPhone) => current(ind).id === payload.id
+        (ind: ListPhone) => current(ind).id === action.payload.id
       );
 
       if (state.listPhones[index]["quanPhone"] > 0) {
         state.listPhones[index]["store"]++;
         state.listPhones[index]["quanPhone"]--;
-        console.log(state.listPhones[index]["quanPhone"]);
       }
       if (state.listPhones[index]["quanPhone"] === 0) {
         // lỗi xóa khỏi giỏ hàng không cập nhật đc listArrPhone mới
