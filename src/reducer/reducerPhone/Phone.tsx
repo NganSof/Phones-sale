@@ -14,10 +14,7 @@ export const Phone = createSlice({
       if (index !== -1 && state.listPhones[index]["store"] !== 0) {
         store = state.listPhones[index]["store"]--;
         add = state.listPhones[index]["quanPhone"]++;
-        state.listPhones.reduce((total, item: any) => {
-          total += current(item).quanPhone * current(item).price;
-          return (state.total = total);
-        }, 0);
+
         if (add >= store) {
           store = 0;
         }
@@ -27,7 +24,6 @@ export const Phone = createSlice({
         return;
       } else {
         state.listPhones.push(payload as never);
-        state.total += (payload.quanPhone + 1) * payload.price;
         // add lại bị lỗi
         payload.quanPhone++;
         payload.store--;
@@ -43,16 +39,7 @@ export const Phone = createSlice({
         state.listPhones[index]["store"]++;
         state.listPhones[index]["quanPhone"]--;
 
-        state.listPhones.reduce((total, item: any) => {
-          total -= current(item).quanPhone * current(item).price;
-          return (state.total = total);
-        }, 0);
-
         if (state.listPhones[index]["quanPhone"] <= 0) {
-          state.listPhones.reduce((total, item: any) => {
-            total -= current(item).quanPhone * current(item).price;
-            return (state.total = total);
-          }, 0);
           // lỗi xóa khỏi giỏ hàng không cập nhật đc listArrPhone mới
           state.listPhones.splice(index, 1);
           console.log("Stotal", state.total);
@@ -60,10 +47,16 @@ export const Phone = createSlice({
       }
       return state;
     },
+    updateTotalTable: (state) => {
+      state.listPhones.reduce((total, item: any) => {
+        total += current(item).quanPhone * current(item).price;
+        return (state.total = total);
+      }, 0);
+    },
   },
 });
 
-export const { addQuanlity, reduceQuanlity } = Phone.actions;
+export const { addQuanlity, reduceQuanlity, updateTotalTable } = Phone.actions;
 
 export const selectPhones = (state: any) => state.phones;
 export default Phone.reducer;

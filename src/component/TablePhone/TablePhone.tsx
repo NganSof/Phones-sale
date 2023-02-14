@@ -7,6 +7,7 @@ import {
   addQuanlity,
   reduceQuanlity,
   selectPhones,
+  updateTotalTable,
 } from "../../reducer/reducerPhone/Phone";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,6 +21,9 @@ export const TablePhone: FC = () => {
   const handleReduQuan = (record: any) => {
     dispatch(reduceQuanlity(record));
   };
+  useEffect(() => {
+    dispatch(updateTotalTable());
+  }, [listPhones]);
 
   const columns: ColumnsType<ListPhone> = useMemo(
     () => [
