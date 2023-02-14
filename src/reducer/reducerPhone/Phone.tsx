@@ -38,14 +38,12 @@ export const Phone = createSlice({
       if (state.listPhones[index]["quanPhone"] > 0) {
         state.listPhones[index]["store"]++;
         state.listPhones[index]["quanPhone"]--;
-
-        if (state.listPhones[index]["quanPhone"] <= 0) {
-          // lỗi xóa khỏi giỏ hàng không cập nhật đc listArrPhone mới
-          state.listPhones.splice(index, 1);
-          console.log("Stotal", state.total);
-        }
+        console.log(state.listPhones[index]["quanPhone"]);
       }
-      return state;
+      if (state.listPhones[index]["quanPhone"] === 0) {
+        // lỗi xóa khỏi giỏ hàng không cập nhật đc listArrPhone mới
+        state.listPhones.splice(index, 1);
+      }
     },
     updateTotalTable: (state) => {
       state.listPhones.reduce((total, item: any) => {
