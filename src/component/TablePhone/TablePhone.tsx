@@ -7,23 +7,24 @@ import {
   addQuanlity,
   reduceQuanlity,
   selectPhones,
-  updateTotalTable,
 } from "../../reducer/reducerPhone/Phone";
 import { useDispatch, useSelector } from "react-redux";
 
 export const TablePhone: FC = () => {
-  const { listPhones, total } = useSelector(selectPhones);
+  const { listPhones } = useSelector(selectPhones);
   const dispatch = useDispatch();
+  let total: number = 0;
+  let list = listPhones.filter((item: ListPhone) => {
+    total += +item.quanPhone * +item.price;
+    return item.quanPhone > 0;
+  });
 
-  const handleAddQuan = (record: any) => {
+  const handleAddQuan = (record: ListPhone) => {
     dispatch(addQuanlity(record));
   };
-  const handleReduQuan = (record: any) => {
+  const handleReduQuan = (record: ListPhone) => {
     dispatch(reduceQuanlity(record));
   };
-  useEffect(() => {
-    dispatch(updateTotalTable());
-  }, [listPhones]);
 
   const columns: ColumnsType<ListPhone> = useMemo(
     () => [
@@ -69,7 +70,7 @@ export const TablePhone: FC = () => {
     <>
       <Table
         columns={columns}
-        dataSource={listPhones}
+        dataSource={list}
         footer={() => `Total : ${total}`}
         pagination={false}
         rowKey="id"
