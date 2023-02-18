@@ -1,9 +1,9 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { listArrPhone, ListPhone } from "../../mock/ArrPhone";
 
 export const Phone = createSlice({
   name: "phones",
-  initialState: { listPhones: listArrPhone, total: 0 },
+  initialState: { listPhones: listArrPhone },
   reducers: {
     addQuanlity: (state, action: PayloadAction<ListPhone>) => {
       state.listPhones.filter((item: ListPhone) => {
@@ -18,7 +18,7 @@ export const Phone = createSlice({
       });
     },
     reduceQuanlity: (state, action: PayloadAction<ListPhone>) => {
-      state.listPhones.filter((item: ListPhone, index: number) => {
+      state.listPhones.filter((item: ListPhone) => {
         if (item.id === action.payload.id && item.quanPhone > 0) {
           item.quanPhone = +item.quanPhone - 1;
           item.store = +item.store + 1;

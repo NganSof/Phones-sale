@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import "./TablePhone.css";
 import { Button, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";

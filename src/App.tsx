@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import { Header } from "./template/Header/Header";
 import { Footer } from "./template/Footer/Footer";
 import { Telephone } from "./Page/Telephone/Telephone";
+import { LoginUser } from "./Page/Login/LoginUser";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path=":id?/telephone" element={<Telephone />} />
+        <Route path="/user" element={<LoginUser />} />
       </Routes>
       <Footer />
     </Fragment>

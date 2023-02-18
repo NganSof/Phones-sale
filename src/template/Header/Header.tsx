@@ -1,10 +1,30 @@
-import { Button, Modal } from "antd";
-import { FC, useState } from "react";
+import { Badge, Button, Modal } from "antd";
+import { FC, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { TablePhone } from "../../component/TablePhone/TablePhone";
+import { ListPhone } from "../../mock/ArrPhone";
+import { selectPhones } from "../../reducer/reducerPhone/Phone";
 import "./Header.css";
 
 export const Header: FC = () => {
-  const [open, setOpen] = useState(false);
+  const { listPhones } = useSelector(selectPhones);
+  const [open, setOpen] = useState<boolean>(false);
+  const [count, setCount] = useState<number>(0);
+
+  useEffect(() => {
+    let Ncount = listPhones.reduce(
+      (setCount: number, currentValue: ListPhone) => {
+        if (currentValue.quanPhone > 0) {
+          setCount += +currentValue.quanPhone;
+        }
+        return setCount;
+      },
+      0
+    );
+
+    setCount(Ncount);
+  }, [listPhones]);
 
   const showModal = () => {
     setOpen(true);
@@ -16,11 +36,15 @@ export const Header: FC = () => {
   return (
     <div className="menu">
       <div className="menuButton">
-        <Button type="dashed" size="large" onClick={showModal} ghost>
-          Store
-        </Button>
+        <Badge showZero count={count} style={{ marginRight: 25, marginTop: 4 }}>
+          <Button type="dashed" size="large" onClick={showModal} ghost>
+            Store
+          </Button>
+        </Badge>
         <Button type="dashed" size="large" ghost>
-          User
+          <Link to={"/user"} style={{ color: "black" }}>
+            User
+          </Link>
         </Button>
       </div>
       <Modal
