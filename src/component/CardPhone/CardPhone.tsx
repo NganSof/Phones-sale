@@ -3,16 +3,16 @@ import { FC, useState } from "react";
 import { ListPhone } from "../../mock/ArrPhone";
 import picture from "../../asset/samsung.png";
 import "./CardPhone.css";
-import { Link } from "react-router-dom";
 import { TablePhone } from "../TablePhone/TablePhone";
 import { useDispatch } from "react-redux";
 import { HeartTwoTone } from "@ant-design/icons";
 import { addQuanlity } from "../../reducer/reducerPhone/Phone";
+import { useNavigate } from "react-router-dom";
 
 export const CardPhone: FC<{ phone: ListPhone }> = ({ phone }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const showModal = () => {
     setOpen(true);
   };
@@ -43,10 +43,20 @@ export const CardPhone: FC<{ phone: ListPhone }> = ({ phone }) => {
             </div>
           </div>
           <div className="bottomRight">
-            <Button type="primary">
-              <Link to="" target={"_blank"}>
-                Detail
-              </Link>
+            <Button
+              type="primary"
+              onClick={() => {
+                if (!localStorage.getItem("login")) {
+                  navigate("/user");
+                  return;
+                } else {
+                  // localStorage.removeItem("login");
+                  navigate(`/detail/${phone.id}`);
+                  return;
+                }
+              }}
+            >
+              Detail
             </Button>
             <Button
               danger
