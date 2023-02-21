@@ -1,7 +1,6 @@
 import { Button, Card, Modal } from "antd";
 import { FC, useState } from "react";
 import { ListPhone } from "../../mock/ArrPhone";
-import picture from "../../asset/samsung.png";
 import "./CardPhone.css";
 import { TablePhone } from "../TablePhone/TablePhone";
 import { useDispatch } from "react-redux";
@@ -28,9 +27,19 @@ export const CardPhone: FC<{ phone: ListPhone }> = ({ phone }) => {
     <>
       <Card.Grid className="bgCard">
         <div className="imgPhone" title={phone.name}>
-          <img src={picture} alt="imagePhone" />
+          <img
+            src={`https://picsum.photos/seed/${phone.id}/1500/1500`}
+            alt="imagePhone"
+          />
         </div>
-        <p>{phone.name}</p>
+        <div className="contentCard">
+          <p>{phone.name}</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est,
+            incidunt fuga animi dicta accusantium id cumque minus ad deserunt
+            nam!
+          </p>
+        </div>
         <div className="bottomCard">
           <div className="bottomLeft">
             <div>
@@ -44,29 +53,28 @@ export const CardPhone: FC<{ phone: ListPhone }> = ({ phone }) => {
           </div>
           <div className="bottomRight">
             <Button
+              className="desDetail"
               type="primary"
               onClick={() => {
                 if (!localStorage.getItem("login")) {
                   navigate("/user");
                   return;
                 } else {
-                  // localStorage.removeItem("login");
                   navigate(`/detail/${phone.id}`);
                   return;
                 }
               }}
             >
-              Detail
+              <span className="sizeDetail">Detail</span>
             </Button>
             <Button
-              danger
-              type="primary"
+              className="desAdd"
               onClick={() => {
                 showModal();
                 handleAddStore();
               }}
             >
-              Add
+              <span className="sizeAdd">+</span>
             </Button>
             <Modal
               title="List card"
